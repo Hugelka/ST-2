@@ -84,8 +84,8 @@ TEST(CircleTests, checkSetNegativeArea) {
     ASSERT_ANY_THROW(c.setArea(-1.0));
 }
 
-TEST(TasksTests, SwimmingPoolTaskNegativeParams) {
-    ASSERT_ANY_THROW(SwimmingPoolTask(-1.0, -1.0));
+TEST(TasksTests, SwimmingpoolNegativeParams) {
+    ASSERT_ANY_THROW(Swimmingpool(-1.0, -1.0));
 }
 
 TEST(CircleTests, checkSetRadius) {
@@ -118,14 +118,16 @@ TEST(EarthAndRopeTest, checkNegativeRope) {
 
 TEST(EarthAndRopeTest, checkEarthRopeDifference) {
     double diff = EarthAndRope(1000.0);
-    EXPECT_DOUBLE_EQ(diff, Circle(6378.1 + 1.0)->getArea() - Circle(6378.1)->getArea());
+    EXPECT_DOUBLE_EQ(diff, Circle(6378.1 + 1.0).getArea() -
+                               Circle(6378.1).getArea());
 }
 
 TEST(SwimmingpoolTest, checkRoadPrice) {
     double price = Swimmingpool(10.0, 5.0);
     Circle poolCircle = Circle(10.0);
     Circle poolAndRoadCircle = Circle(10.0 + 5.0);
-    double expected = 1000 * (poolAndRoadCircle.getArea() - poolCircle.getArea());
+    double expected = 1000 * (poolAndRoadCircle.getArea() -
+                              poolCircle.getArea());
     EXPECT_DOUBLE_EQ(price, expected);
 }
 
