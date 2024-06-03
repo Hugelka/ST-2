@@ -34,7 +34,7 @@ TEST(CircleTests, checkSetNoZeroRadius) {
     c.setRadius(24.0);
     EXPECT_DOUBLE_EQ(c.getRadius(), 24.0);
     EXPECT_DOUBLE_EQ(c.getFerence(), 24.0 * PI * 2);
-    EXPECT_DOUBLE_EQ(c.getArea(), 24.0 * 11.0 * PI);
+    EXPECT_DOUBLE_EQ(c.getArea(), 24.0 * 24.0 * PI);
 }
 
 TEST(CircleTests, checkSetZeroFerence) {
@@ -128,12 +128,26 @@ TEST(SwimmingpoolTest, checkRoadPrice) {
     Circle poolAndRoadCircle = Circle(10.0 + 5.0);
     double expected = 1000 * (poolAndRoadCircle.getArea() -
                               poolCircle.getArea());
-    EXPECT_DOUBLE_EQ(price, expected);
+    double expectedFencePrice = 2000 * poolAndRoadCircle.getFerence();
+    EXPECT_DOUBLE_EQ(price - expectedFencePrice, expected);
 }
 
 TEST(SwimmingpoolTest, checkFencePrice) {
     double price = Swimmingpool(10.0, 5.0);
     Circle poolAndRoadCircle = Circle(10.0 + 5.0);
     double expected = 2000 * poolAndRoadCircle.getFerence();
-    EXPECT_DOUBLE_EQ(price, expected);
+    Circle poolCircle = Circle(10.0);
+    double expectedRoadPrice = 1000 * (poolAndRoadCircle.getArea() -
+                                       poolCircle.getArea());
+    EXPECT_DOUBLE_EQ(price - expectedRoadPrice, expected);
+}
+
+TEST(SwimmingpoolTest, checkZeroWidthRoad) {
+    double price = Swimmingpool(10.0, 0.0);
+    Circle poolCircle = Circle(10.0);
+    double expectedRoadPrice = 1000 * (poolCircle.getArea() -
+                                       poolCircle.getArea());
+    double expectedFencePrice = 2000 * poolCircle.getFerence();
+    double expectedTotalPrice = expectedRoadPrice + expectedFencePrice;
+    EXPECT_DOUBLE_EQ(price, expectedTotalPrice);
 }
